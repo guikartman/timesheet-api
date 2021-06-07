@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS timesheet.usuario (
 
 CREATE TABLE IF NOT EXISTS timesheet.empresa (
     id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    cnpj VARCHAR(255),
-    razao_social VARCHAR(255),
+    cnpj VARCHAR(255) UNIQUE,
+    razao_social VARCHAR(255) UNIQUE,
     usuario_id BIGINT UNSIGNED,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -70,13 +70,17 @@ CREATE TABLE IF NOT EXISTS timesheet.usuario_autorizacao (
 INSERT INTO timesheet.usuario (id, nome, email, senha)
     values (1, 'Administrador', 'admin@gmail.com', '$2a$10$X607ZPhQ4EgGNaYKt3n4SONjIv9zc.VMWdEuhCuba7oLAL5IvcL5.');
 
-## Senha: guilherme
-INSERT INTO timesheet.usuario (id, nome, email, senha)
-    values (2, 'Guilherme Dantas', 'guilherme@gmail.com', '$2a$10$GWk8v9s1R5xIzQpat6zF/eTVtaI92OrQkP8pYOlfo76m1G8YPqosO');
-    
+
 ## Senha: israel
 INSERT INTO timesheet.usuario (id, nome, email, senha)
-    values (3, 'Israel Ferreira', 'israel@gmail.com', '$2a$10$9pB.cNnrF9uQTeySsURlS.BjcNVSuUogwom1WrH4DIe2H7gGJb1Yq');
+    values (2, 'Israel Ferreira', 'israel@gmail.com', '$2a$10$9pB.cNnrF9uQTeySsURlS.BjcNVSuUogwom1WrH4DIe2H7gGJb1Yq');
+    
+
+## Senha: guilherme
+##INSERT INTO timesheet.usuario (id, nome, email, senha)
+    ##values (3, 'Guilherme Dantas', 'guilherme@gmail.com', '$2a$10$GWk8v9s1R5xIzQpat6zF/eTVtaI92OrQkP8pYOlfo76m1G8YPqosO');
+    
+
 
 
 INSERT INTO timesheet.autorizacao (id, descricao) values (1, 'ROLE_ADMINISTRADOR');
@@ -85,11 +89,30 @@ INSERT INTO timesheet.autorizacao (id, descricao) values (2, 'ROLE_FUNCIONARIO')
 ## Administrador - 'ROLE_ADMINISTRADOR'
 INSERT INTO timesheet.usuario_autorizacao (id_usuario, id_autorizacao) values (1, 1);
 
-## Guilherme - 'ROLE_FUNCIONARIO'
+## Israel - 'ROLE_FUNCIONARIO'
 INSERT INTO timesheet.usuario_autorizacao (id_usuario, id_autorizacao) values (2, 2);
 
-## Israel - 'ROLE_FUNCIONARIO'
-INSERT INTO timesheet.usuario_autorizacao (id_usuario, id_autorizacao) values (3, 2);
+## Guilherme - 'ROLE_FUNCIONARIO'
+##INSERT INTO timesheet.usuario_autorizacao (id_usuario, id_autorizacao) values (3, 2);
 
-INSERT INTO  timesheet.empresa (cnpj, razao_social, usuario_id) VALUES ('78.001.298/0001-41', 'Empresa Test', 3);
+
+INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('00.000.000/0001-91', 'BANCO DO BRASIL SA');
+
+INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('15.436.940/0001-03', 'AMAZON SERVICOS DE VAREJO DO BRASIL');
+
+INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('04.712.500/0001-07', 'MICROSOFT DO BRASIL IMPORTACAO E COMERCIO DE SOFTWARE E VIDEO GAMES LTDA');
+
+INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('06.990.590/0001-23', 'GOOGLE BRASIL INTERNET LTDA');
+
+INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('00.623.904/0001-73', 'APPLE COMPUTER BRASIL LTDA');
+
+INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('29.366.628/0001-97', 'XIAOMI BRASIL COMERCIO DE ELETRONICOS EIRELI');
+
+INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('00.776.574/0001-56', 'B2W COMPANHIA DIGITAL');
+
+INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('60.746.948/0001-12', 'BANCO BRADESCO S.A');
+
+INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('61.585.865/0001-51', 'RAIA DROGASIL S.A.');
+
+
 

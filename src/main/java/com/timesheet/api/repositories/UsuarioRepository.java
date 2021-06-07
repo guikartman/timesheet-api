@@ -3,6 +3,8 @@ package com.timesheet.api.repositories;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	public Usuario findOneByEmail(String email);
 	
 	public List<Usuario> findByAutorizacoesDescricao(String autorizacoesDesricao);
+	
+	public Page<Usuario> findByNomeContaining(String nome, Pageable pageable);
 	
 	//@Transactional
 	//public void save(String nome, String email, String senha, List<Autorizacao> auto);

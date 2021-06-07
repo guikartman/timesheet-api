@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.timesheet.api.dto.EmpresaDTO;
 import com.timesheet.api.dto.EmpresaNewDTO;
-import com.timesheet.api.dto.UsuarioDTO;
 import com.timesheet.api.entities.Empresa;
 import com.timesheet.api.entities.Usuario;
+import com.timesheet.api.repositories.EmpresaRepository;
 import com.timesheet.api.services.EmpresaService;
 
 @RestController
@@ -30,6 +31,9 @@ public class EmpresaController {
 	
 	@Autowired
     private EmpresaService service;
+	
+	@Autowired
+	private EmpresaRepository empresaRepository;
 	
 	/*
     @Autowired
@@ -67,9 +71,22 @@ public class EmpresaController {
     
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR') and #oauth2.hasScope('common-scope')")
-    public ResponseEntity<Page<Empresa>> recuperarTodasEmpresas(Pageable pageable) {
-    	return ResponseEntity.ok(service.findAll(pageable));        
+    public ResponseEntity<List<Empresa>> recuperarTodasEmpresas(){//(Pageable pageable) {
+    	return ResponseEntity.ok(service.findAll());        
     }
     
+    /*
+    @GetMapping("/page")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR') and #oauth2.hasScope('common-scope')")
+    public ResponseEntity<Page<Empresa>> recuperarTodasEmpresasComPage(Pageable pageable) {
+    	return ResponseEntity.ok(service.findAllWithPage(pageable));        
+    }
+    */
+    
+    @GetMapping("/page")
+    @PreAuthorize("hasAuthority('ROLE_ADMINISTRADOR') and #oauth2.hasScope('common-scope')")
+	public Page<Empresa> search(@RequestParam(required = false, defaultValue = "") String razaoSocial, Pageable pageable) {
+		return empresaRepository.findByRazaoSocialContaining(razaoSocial, pageable);
+	}
    
 }

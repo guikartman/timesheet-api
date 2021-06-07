@@ -33,7 +33,11 @@ public class EmpresaService {
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Empresa com o id informado não pode ser encontrada"));
     }
     
-    public Page<Empresa> findAll(Pageable pageable) {
+    public List<Empresa> findAll() {
+        return repository.findAll();
+    }
+    
+    public Page<Empresa> findAllWithPage(Pageable pageable) {
         return repository.findAll(pageable);
     }
 

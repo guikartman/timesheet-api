@@ -31,15 +31,17 @@ public class UserService {
 	}
 	
 	
-	public void criarUsuarioFuncionario(String nome, String email, String senha) {
+	public void criarUsuarioFuncionario(String nome, String email, String senha, Long idEmpresa) {
 		Long numeroAutorizacao = 2L;
 		List<Autorizacao> autoriza = Arrays.asList(new Autorizacao(numeroAutorizacao, "ROLE_FUNCIONARIO"));
 		Usuario usuarioASalvar = new Usuario();
+		usuarioASalvar.setEmpresa(this.empresaService.findById(idEmpresa));
 		usuarioASalvar.setNome(nome);
 		usuarioASalvar.setEmail(email);
 		usuarioASalvar.setSenha(bCryptPasswordEncoder.encode(senha));
 		usuarioASalvar.setAutorizacoes(autoriza);
 		repo.save(usuarioASalvar);
+		//return usuarioASalvar;
 	}
 	
 	public UsuarioDTO find(Long id) {
