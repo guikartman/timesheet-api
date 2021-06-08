@@ -92,6 +92,19 @@ public class UserService {
 		return new UsuarioDTO(obj);
 	}
 
+	
+	public Usuario findByEmailSemDTO(String email) {
+
+		//UserSS user = UserService.authenticated();
+		
+		Usuario obj = repo.findOneByEmail(email);
+		if (obj == null) {
+			throw new ResourceNotFoundException(
+					"Objeto não encontrado! Id: " + "Tipo: " + Usuario.class.getName());
+		}
+		return obj;
+	}
+	
 	public static Usuario fromDTO(UsuarioDTO objDto) {
 		//return new Usuario(objDto.getEmail(), objDto.getNome(), objDto.getClass(), objDto.getEmpresa(),null);
 		return new Usuario();

@@ -26,13 +26,13 @@ public class PontoService {
 	@Autowired
     private UserService usuarioService;
 
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");//("dd-MM-yyyy");
 
    
 
-    public FolhaPonto baterPonto(FolhaPontoDTO dto, Long funcionarioId) {
-        FolhaPonto ponto = fromDTO(dto, funcionarioId);
-        return this.repository.save(ponto);
+    public FolhaPonto baterPonto(FolhaPonto dto) {
+        
+        return this.repository.save(dto);
     }
 
     public List<FolhaPontoDTO> recuperarPontosByMonthAndUserId(Long userId, BuscarPontoDTO datas) {
@@ -40,6 +40,19 @@ public class PontoService {
         LocalDate fim = formatDate(datas.getFim());
         List<FolhaPonto> pontos = repository.findByUsuarioIdAndDataPontoBetween(userId,inicio, fim);
         return pontos.stream().map(ponto -> new FolhaPontoDTO(ponto)).collect(Collectors.toList());
+    }
+    
+    public List<FolhaPonto> recuperarPontosByUserId(Long userId) {
+       
+        List<FolhaPonto> pontos = repository.pesquisar(userId);
+        return pontos;
+        //return pontos.stream().map(ponto -> new FolhaPontoDTO(ponto)).collect(Collectors.toList());
+    }
+    
+    public FolhaPonto recuperarPontosByUserId2(Long userId) {
+        
+        FolhaPonto pontos = repository.findOneByUsuarioId(userId);
+        return pontos;
     }
 
     public BigDecimal recuperarTotalHorasTrabalhadasByMonthAndUserId(Long userId, BuscarPontoDTO datas) {
@@ -56,15 +69,16 @@ public class PontoService {
         return sum;
     }
 
-    private FolhaPonto fromDTO(FolhaPontoDTO dto, Long funcionarioId) {
+    private FolhaPonto fromDTO(FolhaPontoDTO dto, Long funcionarioId, Long folhaId) {
         Usuario usuario = usuarioService.findUsuarioById(funcionarioId);
         LocalDate dataPonto = formatDate(dto.getDataPonto());
         return new FolhaPonto(
                 //new PontoUsuarioPK(funcionarioId, dataPonto),
         		//dataPonto,
+        		folhaId,
         		funcionarioId,
         		dataPonto,
-                usuario,
+                usuario,                
                 dto.getHoraEntrada(),
                 dto.getHoraInicioAlmoco(),
                 dto.getHoraFimAlmoco(),

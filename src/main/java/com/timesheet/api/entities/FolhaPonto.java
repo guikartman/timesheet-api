@@ -14,17 +14,26 @@ public class FolhaPonto implements Serializable {
     //private PontoUsuarioPK pontoUsuarioPK;
 
     
+    @Column(name = "folha_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long folhaId;
+    
+    
     @Column(name = "usuario_id")
-    @Id    
+    //@Id    
     private Long usuarioId;
     
-    @Column
+    
+    @Column(name = "data_ponto")
     private LocalDate dataPonto;
     
     @MapsId("id")
-    @ManyToOne
+    //@ManyToOne
     //@JoinColumn(name = "usuario_id")//TODO, referencedColumnName = "id")
     //@JoinColumn(name = "usuario_id", referencedColumnName = "id",insertable=false, updatable=false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
 
     @Column
@@ -59,10 +68,22 @@ public class FolhaPonto implements Serializable {
         return horaEntrada;
     }
     
-    public FolhaPonto(Long usuarioId, LocalDate dataPonto, Usuario usuario, LocalTime horaEntrada,
+    
+	public Long getFolhaId() {
+		return folhaId;
+	}
+
+	public void setFolhaId(Long folhaId) {
+		this.folhaId = folhaId;
+	}
+	
+	
+
+	public FolhaPonto(Long folhaId, Long usuarioId, LocalDate dataPonto, Usuario usuario, LocalTime horaEntrada,
 			LocalTime horaInicioAlmoco, LocalTime horaFimAlmoco, LocalTime horaSaida) {
 		super();
-		this.usuarioId = usuarioId;
+		this.folhaId = folhaId;
+		//this.usuarioId = usuarioId;
 		this.dataPonto = dataPonto;
 		this.usuario = usuario;
 		this.horaEntrada = horaEntrada;
@@ -141,7 +162,8 @@ public class FolhaPonto implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	/*
 	public Long getUsuarioId() {
 		return usuarioId;
 	}
@@ -149,7 +171,7 @@ public class FolhaPonto implements Serializable {
 	public void setUsuarioId(Long usuarioId) {
 		this.usuarioId = usuarioId;
 	}
-
+*/
 	public LocalDate getDataPonto() {
 		return dataPonto;
 	}

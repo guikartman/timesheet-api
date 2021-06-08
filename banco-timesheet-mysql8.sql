@@ -42,7 +42,8 @@ ALTER TABLE timesheet.usuario ADD empresa_id BIGINT UNSIGNED;
 ALTER TABLE timesheet.usuario ADD CONSTRAINT fk_empresa_id FOREIGN KEY (empresa_id) REFERENCES empresa(id);
 
 CREATE TABLE IF NOT EXISTS timesheet.folha_ponto (
-    usuario_id BIGINT UNSIGNED PRIMARY KEY,
+	folha_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    usuario_id BIGINT UNSIGNED,
     data_ponto DATE NOT NULL,
     razao_social VARCHAR(255),
     hora_entrada TIME,

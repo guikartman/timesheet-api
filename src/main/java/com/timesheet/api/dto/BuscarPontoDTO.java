@@ -9,11 +9,11 @@ public class BuscarPontoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotNull(message = "A busca deve conter uma data de inicio")
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private String inicio;
 
     @NotNull(message = "O busca deve conter uma data final")
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
     private String fim;
 
     public BuscarPontoDTO(String inicio, String fim){
