@@ -21,6 +21,7 @@ public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@Column(updatable = false)
 	private Long id;
 	
 	private String nome;

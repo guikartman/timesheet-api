@@ -42,10 +42,9 @@ ALTER TABLE timesheet.usuario ADD empresa_id BIGINT UNSIGNED;
 ALTER TABLE timesheet.usuario ADD CONSTRAINT fk_empresa_id FOREIGN KEY (empresa_id) REFERENCES empresa(id);
 
 CREATE TABLE IF NOT EXISTS timesheet.folha_ponto (
-	folha_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	ponto_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     usuario_id BIGINT UNSIGNED,
     data_ponto DATE NOT NULL,
-    razao_social VARCHAR(255),
     hora_entrada TIME,
     hora_fim_almoco TIME,
     hora_inicio_almoco TIME,
@@ -116,4 +115,34 @@ INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('60.746.948/0001-12'
 INSERT INTO  timesheet.empresa (cnpj, razao_social) VALUES ('61.585.865/0001-51', 'RAIA DROGASIL S.A.');
 
 
+UPDATE timesheet.usuario
+SET empresa_id = 1
+WHERE id = 2; ## Israel  ## Banco do Brasil
+
+INSERT INTO timesheet.folha_ponto
+   (usuario_id,
+    data_ponto,    
+    hora_entrada,
+    hora_fim_almoco,
+    hora_inicio_almoco,
+    hora_saida)
+    VALUES (2, '2021-06-06', '07:30:00', '13:00:00', '12:00:00','18:30:00');
+    
+    INSERT INTO timesheet.folha_ponto
+   (usuario_id,
+    data_ponto,    
+    hora_entrada,
+    hora_fim_almoco,
+    hora_inicio_almoco,
+    hora_saida)
+    VALUES (2, '2021-06-07', '08:00:00', '12:30:00', '11:30:00','17:30:00');
+    
+    INSERT INTO timesheet.folha_ponto
+   (usuario_id,
+    data_ponto,    
+    hora_entrada,
+    hora_fim_almoco,
+    hora_inicio_almoco,
+    hora_saida)
+    VALUES (2, '2021-06-08', '09:20:00', '12:45:00', '11:40:00','16:50:00');
 

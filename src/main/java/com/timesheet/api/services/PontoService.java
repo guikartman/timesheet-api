@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.timesheet.api.dto.BuscarPontoDTO;
 import com.timesheet.api.dto.FolhaPontoDTO;
 import com.timesheet.api.entities.FolhaPonto;
+import com.timesheet.api.entities.FolhaPontoId;
 import com.timesheet.api.entities.PontoUsuarioPK;
 import com.timesheet.api.entities.Usuario;
 import com.timesheet.api.repositories.FolhaPontoRepository;
@@ -32,7 +33,7 @@ public class PontoService {
 
     public FolhaPonto baterPonto(FolhaPonto dto) {
         
-        return this.repository.save(dto);
+        return this.repository.saveAndFlush(dto);
     }
 
     public List<FolhaPontoDTO> recuperarPontosByMonthAndUserId(Long userId, BuscarPontoDTO datas) {
@@ -42,13 +43,14 @@ public class PontoService {
         return pontos.stream().map(ponto -> new FolhaPontoDTO(ponto)).collect(Collectors.toList());
     }
     
+    /*
     public List<FolhaPonto> recuperarPontosByUserId(Long userId) {
        
         List<FolhaPonto> pontos = repository.pesquisar(userId);
         return pontos;
         //return pontos.stream().map(ponto -> new FolhaPontoDTO(ponto)).collect(Collectors.toList());
     }
-    
+    */
     public FolhaPonto recuperarPontosByUserId2(Long userId) {
         
         FolhaPonto pontos = repository.findOneByUsuarioId(userId);
@@ -69,22 +71,25 @@ public class PontoService {
         return sum;
     }
 
+    /*
     private FolhaPonto fromDTO(FolhaPontoDTO dto, Long funcionarioId, Long folhaId) {
         Usuario usuario = usuarioService.findUsuarioById(funcionarioId);
         LocalDate dataPonto = formatDate(dto.getDataPonto());
         return new FolhaPonto(
                 //new PontoUsuarioPK(funcionarioId, dataPonto),
         		//dataPonto,
-        		folhaId,
-        		funcionarioId,
+        		//folhaId,
+        		//funcionarioId,
+        		
         		dataPonto,
+        		//folhaPontoId,
                 usuario,                
                 dto.getHoraEntrada(),
                 dto.getHoraInicioAlmoco(),
                 dto.getHoraFimAlmoco(),
                 dto.getHoraSaida() );
     }
-
+     */
     private LocalDate formatDate(String date) {
         return LocalDate.parse(date, dateFormatter);
     }
